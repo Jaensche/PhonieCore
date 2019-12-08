@@ -1,7 +1,7 @@
 # PhonieCore
 A simple RFID music box implemented in .NET Core
 
-Inspired by the Phoniebox project http://phoniebox.de/
+Inspired by the [Phoniebox project](http://phoniebox.de)
 
 ## What it does
 Plays mp3 file(s) when a corresponding RFID tag is recognized (uid). 
