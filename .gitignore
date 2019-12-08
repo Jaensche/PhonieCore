@@ -3,3 +3,15 @@
 ################################################################################
 
 /.vs/PhonieCore
+/Mfrc522/bin/Debug/netcoreapp3.0
+/Mfrc522/obj/Debug/netcoreapp3.0
+/Mfrc522/obj
+/PhonieCore/bin/Debug/netcoreapp3.0
+/PhonieCore/obj/Debug/netcoreapp3.0
+/PhonieCore/obj
+/Pn532/bin/Debug/netcoreapp3.0
+/Pn532/obj/Debug/netcoreapp3.0
+/Pn532/obj
+/Rfid/bin/Debug/netcoreapp3.0
+/Rfid/obj
+/PhonieCore/properties/PublishProfiles

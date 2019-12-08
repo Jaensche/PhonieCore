@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhonieCore", "DotNetCoreTest\PhonieCore.csproj", "{63EB98BF-2134-454A-8579-97D5C08748DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhonieCore", "PhonieCore\PhonieCore.csproj", "{63EB98BF-2134-454A-8579-97D5C08748DB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mfrc522", "Mfrc522\Mfrc522.csproj", "{0C60F601-29B0-4184-B9FF-56EC7C73E079}"
 EndProject
