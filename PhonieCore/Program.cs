@@ -1,12 +1,21 @@
-﻿namespace DotNetCoreTest
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace PhonieCore
 {
     public class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
-            Radio radio = new Radio();
-
-            while (true) ;
+            CreateHostBuilder(args).Build().Run();
         }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseSystemd()
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<PhonieWorker>();
+                });
     }
 }

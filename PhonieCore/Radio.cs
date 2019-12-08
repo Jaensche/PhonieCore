@@ -1,34 +1,35 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace DotNetCoreTest
+namespace PhonieCore
 {
     public class Radio
     {
-        private Player sound;
-        private Library library;
+        private Player _player;
+        private Library _library;
 
         public Radio()
         {
-            sound = new Player();
-            library = new Library();
-            RfidPoller poller = new RfidPoller(HandleNewCardDetected, HandleCardDetected);
+            _player = new Player();
+            _library = new Library();
+            Rfid rfid = new Rfid(HandleNewCardDetected, HandleCardDetected);
         }
 
         private void HandleCardDetected(string uid)
         {
-
         }
 
         private void HandleNewCardDetected(string uid)
         {
-            string folder = library.GetFolderForId(uid);
+            string folder = _library.GetFolderForId(uid);
 
             string fileToPlay = Directory.EnumerateFiles(folder).FirstOrDefault();
             if (fileToPlay != null)
             {
-                sound.Play(fileToPlay);
+                _player.Play(fileToPlay);
             }
 
             Console.WriteLine(folder);

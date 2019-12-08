@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace DotNetCoreTest
+namespace PhonieCore
 {
     public class Player
     {
