@@ -13,7 +13,10 @@ When an existing tag is recognized the mp3 files in the folder are played.
 The folder that corresponds with the current tag is marked with an @ in the end (so that one knows where to add the files for that tag). 
 
 ## Hardware
-Raspberry pi 3b running raspbian buster lite with an rc522 RFID reader connected via SPI.
+- Raspberry pi 3b running raspbian buster lite
+- rc522 RFID reader connected via SPI
+- Powerbank with pass through changing (to enable use and charge at the same time)
+- Nice box that fits all components
 
 ## Installation
 Update your raspbian
@@ -29,7 +32,25 @@ sudo apt-get install samba
 
 Configure samba
 ```
-TBD
+sudo nano /etc/samba/smb.conf
+
+add these lines at the bottom to get two open shares for the executable and the media)
+path = /media/
+public = yes
+writable = yes
+guest ok = yes
+
+[core]
+path = /opt/phoniecore
+public = yes
+writable = yes
+guests ok = yes
+```
+
+Enable Zeroconf (use hostname for connections) 
+```
+sudo apt-get install avahi-daemon
+sudo nano /etc/hostname
 ```
 
 Get mpg123
