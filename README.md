@@ -22,7 +22,7 @@ sudo apt update
 sudo apt upgrade
 ```
 
-Samba sahres
+Samba shares
 ```
 sudo apt-get install samba
 sudo nano /etc/samba/smb.conf
@@ -56,6 +56,11 @@ https://dotnet.microsoft.com/download/dotnet-core
 
 Set up systemd
 https://devblogs.microsoft.com/dotnet/net-core-and-systemd/
+
+Binaries
+```
+Copy the binaries to the core share
+```
 
 ## ToDo
 - [ ] Fix playing files with whitespace
