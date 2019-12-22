@@ -13,7 +13,7 @@ When an existing tag is recognized the mp3 files in the folder are played.
 The folder that corresponds with the current tag is marked with an @ in the end (so that one knows where to add the files for that tag). 
 
 ## Hardware
-Tested on a Raspberry pi 3b running raspbian buster lite with an rc522 RFID reader connected via SPI.
+Raspberry pi 3b running raspbian buster lite with an rc522 RFID reader connected via SPI.
 
 ## Installation
 Update your raspbian
@@ -32,9 +32,9 @@ Configure samba
 TBD
 ```
 
-Get omxplayer
+Get mpg123
 ```
-sudo apt-get install omxplayer
+sudo apt-get install mpg123
 ```
 
 Install .Net Core
@@ -42,4 +42,8 @@ https://dotnet.microsoft.com/download/dotnet-core
 
 Set up systemd
 https://devblogs.microsoft.com/dotnet/net-core-and-systemd/
+
+## ToDo
+- [ ] Fix playing files with whitespace
+- [ ] Bring readme up to date
 
