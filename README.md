@@ -5,8 +5,8 @@ Inspired by the [Phoniebox project](http://phoniebox.de)
 
 ## What it does
 - Plays mp3 file(s) when a corresponding RFID tag is recognized (uid)
-- When a new tag is recognized a folder is created in the samba share
-- When an existing tag is recognized the mp3 files in the folder are played. 
+- When a new tag is recognized a folder is created in a samba share
+- When an existing tag is recognized the media files in the folder are played. 
 - The folder that corresponds with the current tag is marked with an @ in the end (so that one knows where to add the media files for that tag)
 
 ## Hardware
