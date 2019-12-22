@@ -4,13 +4,10 @@ A simple RFID music box implemented in .NET Core
 Inspired by the [Phoniebox project](http://phoniebox.de)
 
 ## What it does
-Plays mp3 file(s) when a corresponding RFID tag is recognized (uid). 
-
-When a new tag is recognized a folder is created in the samba share. 
-
-When an existing tag is recognized the mp3 files in the folder are played. 
-
-The folder that corresponds with the current tag is marked with an @ in the end (so that one knows where to add the files for that tag). 
+- Plays mp3 file(s) when a corresponding RFID tag is recognized (uid)
+- When a new tag is recognized a folder is created in the samba share
+- When an existing tag is recognized the mp3 files in the folder are played. 
+- The folder that corresponds with the current tag is marked with an @ in the end (so that one knows where to add the media files for that tag)
 
 ## Hardware
 - Raspberry pi 3b running raspbian buster lite
@@ -25,16 +22,12 @@ sudo apt update
 sudo apt upgrade
 ```
 
-Get samba
+Samba sahres
 ```
 sudo apt-get install samba
-```
-
-Configure samba
-```
 sudo nano /etc/samba/smb.conf
 
-add these lines at the bottom to get two open shares for the executable and the media)
+add these lines at the bottom to get two open shares for the executable and the media):
 path = /media/
 public = yes
 writable = yes
