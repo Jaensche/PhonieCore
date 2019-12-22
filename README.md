@@ -22,7 +22,7 @@ sudo apt update
 sudo apt upgrade
 ```
 
-###Samba shares
+### Samba shares
 ```
 sudo apt-get install samba
 sudo nano /etc/samba/smb.conf
@@ -40,26 +40,26 @@ writable = yes
 guests ok = yes
 ```
 
-###Enable Zeroconf (use hostname for connections) 
+### Enable Zeroconf (use hostname for connections) 
 ```
 sudo apt-get install avahi-daemon
 sudo nano /etc/hostname
 ```
 
-###Get mpg123
+### Get mpg123
 ```
 sudo apt-get install mpg123
 ```
 
-###Install .Net Core
+### Install .Net Core
 https://dotnet.microsoft.com/download/dotnet-core
 
-##PhonieCore
+### PhonieCore
 ```
 Copy the binaries to the core share
 ```
 
-###Set up systemd
+### Run PhonieCore using systemd
 https://devblogs.microsoft.com/dotnet/net-core-and-systemd/
 
 ## ToDo
