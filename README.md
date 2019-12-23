@@ -1,5 +1,5 @@
 # PhonieCore
-A simple RFID music box implemented in .NET Core
+A simple Raspberry Pi RFID music box implemented in .NET Core 
 
 Inspired by the [Phoniebox project](http://phoniebox.de)
 
@@ -16,7 +16,7 @@ Inspired by the [Phoniebox project](http://phoniebox.de)
 - Nice box that fits all components
 
 ## Installation
-Update your raspbian
+### Update Raspbian
 ```
 sudo apt update
 sudo apt upgrade
@@ -26,8 +26,10 @@ sudo apt upgrade
 ```
 sudo apt-get install samba
 sudo nano /etc/samba/smb.conf
-
-add these lines at the bottom to get two open shares for the executable and the media):
+```
+Add these lines at the bottom to get two open shares for the executable and the media:
+```
+[media]
 path = /media/
 public = yes
 writable = yes
@@ -40,18 +42,18 @@ writable = yes
 guests ok = yes
 ```
 
-### Enable Zeroconf (use hostname for connections) 
+### Zeroconf (use hostname for connections) 
 ```
 sudo apt-get install avahi-daemon
 sudo nano /etc/hostname
 ```
 
-### Get mpg123
+### mpg123
 ```
 sudo apt-get install mpg123
 ```
 
-### Install .Net Core
+### .Net Core
 https://dotnet.microsoft.com/download/dotnet-core
 
 ### PhonieCore
