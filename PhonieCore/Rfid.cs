@@ -38,7 +38,7 @@ namespace PhonieCore
 
         private static Action ReadCardUidLoop(Mfrc522Controller mfrc522Controller, NewCardDetectedHandler onNewCardDetected, CardDetectedHandler onCardDetected)
         {
-            string lastUid = String.Empty;
+            string lastUid = string.Empty;
             while (true)
             {
                 Task.Delay(1000);

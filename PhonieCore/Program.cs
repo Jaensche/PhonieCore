@@ -7,7 +7,11 @@ namespace PhonieCore
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            //CreateHostBuilder(args).Build().Run();
+
+            new Radio();
+
+            while (true) ;
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -17,5 +21,9 @@ namespace PhonieCore
                 {
                     services.AddHostedService<PhonieWorker>();
                 });
+
+       
     }
+
+    
 }

@@ -1,43 +1,39 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 namespace PhonieCore
 {
     public class Player
     {
-        /*
-         *  player.Play("/home/pi/example.mp3");
-         */
-
         private Process _runningProc;
 
-        public void Play(string file)
+        public void PlayFolder(string folder)
         {
             Stop();
 
-            Console.WriteLine("Play file: " + file);
+            string arguments = string.Join(" ", Directory.EnumerateFiles(folder));
 
-            _runningProc = CreateProcess("omxplayer", $"\"{file}\"");
+            Console.WriteLine("Play files: " + arguments);
+            _runningProc = CreateProcess("mpg123", arguments);
             _runningProc.Start();
         }
 
         public void Stop()
         {
-            if (_runningProc != null)
-            {
-                _runningProc.Kill(true);
-            }
+            _runningProc?.Kill(true);
         }
 
-        static Process CreateProcess(string path, string args)
+        private static Process CreateProcess(string fileName, string args)
         {
             var process = new Process();
 
-            ProcessStartInfo startInfo = new ProcessStartInfo(path, args);
+            ProcessStartInfo startInfo = new ProcessStartInfo(fileName, args);
             startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.RedirectStandardInput = true;
+            startInfo.RedirectStandardOutput = false;
+            startInfo.RedirectStandardError = false;
+            startInfo.RedirectStandardInput = false;
 
             process.StartInfo = startInfo;
             process.EnableRaisingEvents = true;

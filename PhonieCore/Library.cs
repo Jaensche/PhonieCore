@@ -4,7 +4,7 @@ namespace PhonieCore
 {
     public class Library
     {
-        private const string BaseDirectory = "/home/pi/";
+        private const string MediaDirectory = "/media/";
         private const string Marker = "@";
 
         public string GetFolderForId(string id)
@@ -14,7 +14,7 @@ namespace PhonieCore
 
         private string SetCurrentDirectoryStar(string id)
         {
-            foreach(string directory in Directory.EnumerateDirectories(BaseDirectory))
+            foreach (string directory in Directory.EnumerateDirectories(MediaDirectory))
             {
                 if (directory.EndsWith(Marker))
                 {
@@ -22,10 +22,10 @@ namespace PhonieCore
                 }
             }
 
-            string newDirectoryName = BaseDirectory + id + Marker;
-            if (Directory.Exists(BaseDirectory + id))
+            string newDirectoryName = MediaDirectory + id + Marker;
+            if (Directory.Exists(MediaDirectory + id))
             {
-                Directory.Move(BaseDirectory + id, newDirectoryName);
+                Directory.Move(MediaDirectory + id, newDirectoryName);
             }
             else
             {

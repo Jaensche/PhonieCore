@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace PhonieCore
+﻿namespace PhonieCore
 {
     public class Radio
     {
@@ -26,13 +20,7 @@ namespace PhonieCore
         {
             string folder = _library.GetFolderForId(uid);
 
-            string fileToPlay = Directory.EnumerateFiles(folder).FirstOrDefault();
-            if (fileToPlay != null)
-            {
-                _player.Play(fileToPlay);
-            }
-
-            Console.WriteLine(folder);
+            _player.PlayFolder(folder);
         }
     }
 }
