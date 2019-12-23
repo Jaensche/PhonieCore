@@ -1,5 +1,5 @@
 # PhonieCore
-A simple RFID music box implemented in .NET Core
+A simple Raspberry Pi RFID music box implemented in .NET Core 
 
 Inspired by the [Phoniebox project](http://phoniebox.de)
 
