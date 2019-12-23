@@ -16,7 +16,7 @@ Inspired by the [Phoniebox project](http://phoniebox.de)
 - Nice box that fits all components
 
 ## Installation
-### Update your raspbian
+### Update Raspbian
 ```
 sudo apt update
 sudo apt upgrade
@@ -40,18 +40,18 @@ writable = yes
 guests ok = yes
 ```
 
-### Enable Zeroconf (use hostname for connections) 
+### Zeroconf (use hostname for connections) 
 ```
 sudo apt-get install avahi-daemon
 sudo nano /etc/hostname
 ```
 
-### Get mpg123
+### mpg123
 ```
 sudo apt-get install mpg123
 ```
 
-### Install .Net Core
+### .Net Core
 https://dotnet.microsoft.com/download/dotnet-core
 
 ### PhonieCore
