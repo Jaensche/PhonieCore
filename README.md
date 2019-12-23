@@ -16,7 +16,7 @@ Inspired by the [Phoniebox project](http://phoniebox.de)
 - Nice box that fits all components
 
 ## Installation
-Update your raspbian
+### Update your raspbian
 ```
 sudo apt update
 sudo apt upgrade
