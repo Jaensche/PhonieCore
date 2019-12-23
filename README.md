@@ -27,7 +27,7 @@ sudo apt upgrade
 sudo apt-get install samba
 sudo nano /etc/samba/smb.conf
 ```
-add these lines at the bottom to get two open shares for the executable and the media):
+Add these lines at the bottom to get two open shares for the executable and the media:
 ```
 [media]
 path = /media/
