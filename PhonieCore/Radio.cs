@@ -2,13 +2,11 @@
 {
     public class Radio
     {
-        private Player _player;
-        private Library _library;
+        private readonly Player _player;
 
         public Radio()
         {
             _player = new Player();
-            _library = new Library();
             Rfid rfid = new Rfid(HandleNewCardDetected, HandleCardDetected);
         }
 
@@ -18,9 +16,7 @@
 
         private void HandleNewCardDetected(string uid)
         {
-            string folder = _library.GetFolderForId(uid);
-
-            _player.PlayFolder(folder);
+            _player.PlayFolder(uid);
         }
     }
 }

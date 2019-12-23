@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace PhonieCore
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class Program
     {
         public static void Main(string[] args)
@@ -10,7 +11,7 @@ namespace PhonieCore
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSystemd()
                 .ConfigureServices(services =>

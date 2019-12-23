@@ -8,10 +8,18 @@ namespace PhonieCore
     public class Player
     {
         private Process _runningProc;
+        private readonly Library _library;
 
-        public void PlayFolder(string folder)
+        public Player()
+        {
+            _library = new Library();
+        }
+
+        public void PlayFolder(string uid)
         {
             Stop();
+
+            string folder = _library.GetFolderForId(uid);
 
             string arguments = string.Join(" ", Directory.EnumerateFiles(folder));
 
@@ -20,7 +28,7 @@ namespace PhonieCore
             _runningProc.Start();
         }
 
-        public void Stop()
+        private void Stop()
         {
             _runningProc?.Kill(true);
         }
@@ -29,11 +37,13 @@ namespace PhonieCore
         {
             var process = new Process();
 
-            ProcessStartInfo startInfo = new ProcessStartInfo(fileName, args);
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = false;
-            startInfo.RedirectStandardError = false;
-            startInfo.RedirectStandardInput = false;
+            var startInfo = new ProcessStartInfo(fileName, args)
+            {
+                UseShellExecute = false,
+                RedirectStandardOutput = false,
+                RedirectStandardError = false,
+                RedirectStandardInput = false
+            };
 
             process.StartInfo = startInfo;
             process.EnableRaisingEvents = true;
