@@ -65,4 +65,5 @@ https://devblogs.microsoft.com/dotnet/net-core-and-systemd/
 ## ToDo
 - [ ] Fix playing files with whitespace
 - [ ] Bring readme up to date
+- [ ] Add play / pause / stop by RFID support
 
