@@ -16,7 +16,7 @@
 
         private void HandleNewCardDetected(string uid)
         {
-            _player.PlayFolder(uid);
+            _player.ProcessFolder(uid);
         }
     }
 }

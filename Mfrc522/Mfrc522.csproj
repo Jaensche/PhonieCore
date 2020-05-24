@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <EnableDefaultItems>false</EnableDefaultItems> <!--Disabling default items so samples source won't get build by the main library-->
   </PropertyGroup>
 
