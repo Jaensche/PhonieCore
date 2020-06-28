@@ -11,7 +11,8 @@ namespace PhonieCore
         private Mopidy.Client _mopidyClient;
 
         private const string StopFile = "STOP";
-        private const string PauseFile = "PAUSE";        
+        private const string PauseFile = "PAUSE";
+        private const string SpotifyFile = "SPOTIFY";
 
         public Player()
         {
@@ -35,6 +36,10 @@ namespace PhonieCore
             {
                 Pause();
             }
+            else if (files.Any(f => f.Contains(SpotifyFile)))
+            {
+                PlaySpotify(File.ReadAllText(files.FirstOrDefault()));
+            }
             else
             {
                 Play(files);
@@ -51,10 +56,22 @@ namespace PhonieCore
             _mopidyClient.ClearTracks();
             foreach (string file in files)
             {
-                _mopidyClient.AddTrack(file);
+                _mopidyClient.AddTrack("file://" + file);
             }
 
             _mopidyClient.Play();                       
+        }
+
+        private void PlaySpotify(string uri)
+        {
+            Console.WriteLine("Play Spotify: " + uri);
+
+            Stop();
+
+            _mopidyClient.ClearTracks();            
+             _mopidyClient.AddTrack(uri);            
+
+            _mopidyClient.Play();
         }
 
         private void Stop()

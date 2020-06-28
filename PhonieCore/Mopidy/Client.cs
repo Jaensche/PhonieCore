@@ -42,7 +42,9 @@ namespace PhonieCore.Mopidy
             JsonSerializerSettings setting = new JsonSerializerSettings();
             setting.NullValueHandling = NullValueHandling.Ignore;
 
-            var httpContent = new StringContent(JsonConvert.SerializeObject(request, setting), null, "application/json");
+            string json = JsonConvert.SerializeObject(request, setting);
+            Console.WriteLine(json);
+            var httpContent = new StringContent(json, null, "application/json");
             httpContent.Headers.ContentType.CharSet = "";
             var result = client.PostAsync(MopidyUrl, httpContent).Result;
             Console.WriteLine(result.StatusCode + ", " + result.ReasonPhrase, ", ", result.Content);
@@ -68,10 +70,9 @@ namespace PhonieCore.Mopidy
             Call("mixer.set_volume", new Dictionary<string, object> { { "volume",  volume } });
         }
 
-        public void AddTrack(string file)
+        public void AddTrack(string uri)
         {
-            string fileUri = "file://" + file;
-            Call("tracklist.add", new Dictionary<string, object[]> { { "uris", new[] { fileUri } } });
+            Call("tracklist.add", new Dictionary<string, object[]> { { "uris", new string[] { uri } } });
         }
 
         public void ClearTracks()
