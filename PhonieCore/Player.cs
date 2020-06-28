@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -8,21 +7,27 @@ namespace PhonieCore
 {
     public class Player
     {
-        private Process _runningProc;
         private readonly Library _library;
+        private Mopidy.Client _mopidyClient;
 
         private const string StopFile = "STOP";
-        private const string PauseFile = "PAUSE";
+        private const string PauseFile = "PAUSE";        
 
         public Player()
         {
             _library = new Library();
+            _mopidyClient = new Mopidy.Client();
         }
 
         public void ProcessFolder(string uid)
         {
             string folder = _library.GetFolderForId(uid);
             var files = Directory.EnumerateFiles(folder).ToArray();
+
+            foreach (string file in files)
+            {
+                Console.WriteLine(file);
+            }
 
             if(files.Any(f => f.Contains(StopFile)))
                 Stop();
@@ -38,42 +43,30 @@ namespace PhonieCore
 
         private void Play(IEnumerable<string> files)
         {
-            Stop();
             string arguments = string.Join(" ", files);
             Console.WriteLine("Play files: " + arguments);
-            _runningProc = CreateProcess("mpg123", arguments);
-            _runningProc.Start();
+
+            Stop();
+
+            _mopidyClient.ClearTracks();
+            foreach (string file in files)
+            {
+                _mopidyClient.AddTrack(file);
+            }
+
+            _mopidyClient.Play();                       
         }
 
         private void Stop()
         {
-            _runningProc?.Kill(true);
             Console.WriteLine("Stop");
+            _mopidyClient.Stop();            
         }
 
         private void Pause()
         {
-            _runningProc?.StandardInput.Write("s");
-            _runningProc?.StandardInput.Flush();
             Console.WriteLine("Pause");
-        }
-
-        private static Process CreateProcess(string fileName, string args)
-        {
-            var process = new Process();
-
-            var startInfo = new ProcessStartInfo(fileName, args)
-            {
-                UseShellExecute = false,
-                RedirectStandardOutput = false,
-                RedirectStandardError = false,
-                RedirectStandardInput = true
-            };
-
-            process.StartInfo = startInfo;
-            process.EnableRaisingEvents = true;
-
-            return process;
-        }
+            _mopidyClient.Pause();            
+        }       
     }
 }
