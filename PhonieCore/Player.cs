@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace PhonieCore
 {
@@ -12,6 +13,7 @@ namespace PhonieCore
 
         private const string StopFile = "STOP";
         private const string PauseFile = "PAUSE";
+        private const string PlayFile = "PLAY";
         private const string SpotifyFile = "SPOTIFY";
 
         public Player()
@@ -30,8 +32,14 @@ namespace PhonieCore
                 Console.WriteLine(file);
             }
 
-            if(files.Any(f => f.Contains(StopFile)))
+            if (files.Any(f => f.Contains(StopFile)))
+            {
                 Stop();
+            }
+            else if (files.Any(f => f.Contains(PlayFile)))
+            {
+                Play();
+            }
             else if (files.Any(f => f.Contains(PauseFile)))
             {
                 Pause();
@@ -40,10 +48,15 @@ namespace PhonieCore
             {
                 PlaySpotify(File.ReadAllText(files.FirstOrDefault()));
             }
-            else
+            else if(files.Any(f => f.EndsWith("mp3")))
             {
                 Play(files);
             }
+        }
+
+        private void Play()
+        {
+            _mopidyClient.Play();
         }
 
         private void Play(IEnumerable<string> files)

@@ -15,3 +15,10 @@
 /Rfid/bin/Debug/netcoreapp3.0
 /Rfid/obj
 /PhonieCore/properties/PublishProfiles
+/IMG
+/Mfrc522/bin
+/PhonieCore/bin
+/Pn532/bin
+/Rfid/bin
+/spotify.txt
+/PhonieCore.sln.DotSettings

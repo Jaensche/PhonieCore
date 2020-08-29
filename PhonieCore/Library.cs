@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace PhonieCore
 {
@@ -28,8 +29,10 @@ namespace PhonieCore
                 Directory.Move(MediaDirectory + id, newDirectoryName);
             }
             else
-            {
-                Directory.CreateDirectory(newDirectoryName);
+            { 
+                var dir = Directory.CreateDirectory(newDirectoryName);
+                Bash.Exec("sudo chmod 777 " + dir.FullName);
+                Console.WriteLine("sudo chmod 777 " + dir.FullName);
             }
 
             return newDirectoryName;
