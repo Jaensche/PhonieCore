@@ -16,7 +16,7 @@ pipeline {
 
     stage('Artifacts') {
       steps {
-        archiveArtifacts '*.dll'
+        archiveArtifacts 'PhonieCore/bin/Debug/netcoreapp3.1/*'
       }
     }
 
