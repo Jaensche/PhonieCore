@@ -10,7 +10,7 @@ pipeline {
     stage('Build') {
       steps {
         bat 'nuget restore'
-        bat 'msbuild PhonieCore.sln /t:Rebuild /p:Configuration=Release'
+        bat 'dotnet msbuild'
       }
     }
 
