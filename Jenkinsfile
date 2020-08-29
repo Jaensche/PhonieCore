@@ -14,5 +14,11 @@ pipeline {
       }
     }
 
+    stage('Artifacts') {
+      steps {
+        archiveArtifacts '*.dll'
+      }
+    }
+
   }
 }
