@@ -48,9 +48,9 @@ sudo apt-get install avahi-daemon
 sudo nano /etc/hostname
 ```
 
-### mpg123
+### Mopidy
 ```
-sudo apt-get install mpg123
+sudo apt-get install mopidy
 ```
 
 ### .Net Core
