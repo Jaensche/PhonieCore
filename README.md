@@ -51,7 +51,13 @@ sudo nano /etc/hostname
 ### Mopidy
 ```
 sudo apt-get install mopidy
+sudo python3 -m pip install Mopidy-Spotify
 ```
+mopidy.conf
+```
+[spotify]
+client_id = ...
+client_secret = ...
 
 ### .Net Core
 https://dotnet.microsoft.com/download/dotnet-core
