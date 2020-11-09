@@ -58,6 +58,7 @@ mopidy.conf
 [spotify]
 client_id = ...
 client_secret = ...
+```
 
 ### .Net Core
 https://dotnet.microsoft.com/download/dotnet-core
@@ -71,7 +72,5 @@ Copy the binaries to the core share
 https://devblogs.microsoft.com/dotnet/net-core-and-systemd/
 
 ## ToDo
-- [ ] Fix playing files with whitespace
-- [ ] Bring readme up to date
-- [ ] Add play / pause / stop by RFID support
+- [ ] Proper shutdown
 
