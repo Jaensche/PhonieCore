@@ -51,6 +51,7 @@ sudo nano /etc/hostname
 ### Mopidy
 ```
 sudo apt-get install mopidy
+sudo apt-get install python3-pip
 sudo python3 -m pip install Mopidy-Spotify
 ```
 mopidy.conf
