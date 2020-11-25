@@ -14,6 +14,7 @@ Inspired by the [Phoniebox project](http://phoniebox.de)
 - rc522 RFID reader connected via SPI
 - Powerbank with pass through changing (to enable use and charge at the same time)
 - Nice box that fits all components
+- Audio hat (WM8960)
 
 ## Installation
 ### Update Raspbian
@@ -63,6 +64,12 @@ mopidy.conf
 [spotify]
 client_id = ...
 client_secret = ...
+```
+
+### Audio HAT Driver
+```
+git clone https://github.com/waveshare/WM8960-Audio-HAT
+./install.sh sudo reboot
 ```
 
 ### .Net Core
