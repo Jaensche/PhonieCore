@@ -73,12 +73,14 @@ git clone https://github.com/waveshare/WM8960-Audio-HAT
 ```
 
 ### .Net Core
+```
 wget https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-5.0.0-linux-arm32-binaries
 sudo mkdir -p /usr/share/dotnet
 sudo tar -zxf dotnet-sdk-latest-linux-arm.tar.gz -C /usr/share/dotnet
 sudo ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 export DOTNET_ROOT=$HOME/dotnet-arm32
 export PATH=$PATH:$HOME/dotnet-arm32
+```
 
 ### PhonieCore
 ```
