@@ -1,94 +1,73 @@
-﻿using System;
-using System.Device.Spi;
-using System.Device.Spi.Drivers;
+﻿using Unosquare.RaspberryIO.Peripherals;
 using System.Text;
-using System.Threading.Tasks;
-using Iot.Device.Mfrc522;
-using Iot.Device.Rfid;
+using System;
 
 namespace PhonieCore
 {
     public class Rfid
     {
         public delegate void NewCardDetectedHandler(string uid);
-        public static event NewCardDetectedHandler OnNewCardDetected;
 
         public delegate void CardDetectedHandler(string uid);
-        public static event CardDetectedHandler OnCardDetected;
 
         public Rfid(NewCardDetectedHandler onNewCardDetected, CardDetectedHandler onCardDetected)
         {
-            var connection = new SpiConnectionSettings(0, 0);
-            connection.ClockFrequency = 500000;
-
-            var spi = new UnixSpiDevice(connection);
-            using (var mfrc522Controller = new Mfrc522Controller(spi))
+            RFIDControllerMfrc522 _reader;
+            try
             {
-                mfrc522Controller.LogLevel = LogLevel.Info;
-                mfrc522Controller.LogTo = LogTo.Console;
-                mfrc522Controller.RxGain = RxGain.G48dB;
+                _reader = new RFIDControllerMfrc522();           
 
-                OnNewCardDetected += new NewCardDetectedHandler(onNewCardDetected);
-                OnCardDetected += new CardDetectedHandler(onCardDetected);
-                Task.Factory.StartNew(ReadCardUidLoop(mfrc522Controller, OnNewCardDetected, OnCardDetected));
-            }
-
-            while (true) ;
-        }
-
-        private static Action ReadCardUidLoop(Mfrc522Controller mfrc522Controller, NewCardDetectedHandler onNewCardDetected, CardDetectedHandler onCardDetected)
-        {
-            string lastUid = string.Empty;
-            while (true)
-            {
-                Task.Delay(1000);
-                var (status, _) = mfrc522Controller.Request(RequestMode.RequestIdle);
-                if (status != Status.OK)
-                    continue;
-
-                var (status2, uidBytes) = mfrc522Controller.AntiCollision();
-                string uid = BytesToString(uidBytes);
-
-                if (uid.Length == 12)
+                string lastUid = string.Empty;
+                while (true)
                 {
-                    onCardDetected.Invoke(uid);
-                    if (uid != lastUid)
+                    if (_reader.DetectCard() == RFIDControllerMfrc522.Status.AllOk)
                     {
-                        onNewCardDetected.Invoke(uid);
-                        lastUid = uid;
+                        var uidResponse = _reader.ReadCardUniqueId();
+                        if (uidResponse.Status == RFIDControllerMfrc522.Status.AllOk)
+                        {
+                            var cardUid = uidResponse.Data;
+                            _reader.SelectCardUniqueId(cardUid);
+
+                            string currentUid = ByteArrayToString(cardUid);
+                            if(currentUid != lastUid)
+                            {
+                                lastUid = currentUid;
+                                onNewCardDetected(currentUid);
+                            }
+                            else
+                            {
+                                onCardDetected(currentUid);
+                            }
+                        
+                            //try
+                            //{
+                            //    if (_reader.AuthenticateCard1A(cardUid, 7) == RFIDControllerMfrc522.Status.AllOk)
+                            //    {
+                            //        // Read or write data to sector
+                            //    }
+                            //}
+                            //finally
+                            //{
+                            //    _reader.ClearCardSelection();
+                            //}
+                        }
                     }
-                }
+            }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
 
-        private static string BytesToString(byte[] data)
+        public static string ByteArrayToString(byte[] ba)
         {
-            // Minimum length 1.
-            if (data.Length == 0) return "0";
-
-            // length <= digits.Length.
-            var digits = new byte[(data.Length * 0x00026882/* (int)(Math.Log(2, 10) * 0x80000) */ + 0xFFFF) >> 16];
-            int length = 1;
-
-            // For each byte:
-            for (int j = 0; j != data.Length; ++j)
+            StringBuilder hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
             {
-                // digits = digits * 256 + data[j].
-                int i, carry = data[j];
-                for (i = 0; i < length || carry != 0; ++i)
-                {
-                    int value = digits[i] * 256 + carry;
-                    carry = Math.DivRem(value, 10, out value);
-                    digits[i] = (byte)value;
-                }
-                // digits got longer.
-                if (i > length) length = i;
+                hex.AppendFormat("{0:x2}", b);
             }
-
-            // Return string.
-            var result = new StringBuilder(length);
-            while (0 != length) result.Append((char)('0' + digits[--length]));
-            return result.ToString();
+            return hex.ToString();
         }
     }
 }

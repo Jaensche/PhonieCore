@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Net.Http;
-using System.Text;
-using System.Net.Mime;
 using System.Collections.Generic;
-using Swan;
+
+// https://docs.mopidy.com/en/latest/api/core/#playback-controller
 
 namespace PhonieCore.Mopidy
 {
@@ -16,7 +15,7 @@ namespace PhonieCore.Mopidy
 
         public Client()
         {
-            client = new HttpClient();            
+            client = new HttpClient();
         }
 
         private void Call(string method, Dictionary<string, object[]> parameters)
@@ -37,7 +36,7 @@ namespace PhonieCore.Mopidy
             Fire(request);
         }
 
-        private void Fire(Request request)
+        private async void Fire(Request request)
         {
             JsonSerializerSettings setting = new JsonSerializerSettings();
             setting.NullValueHandling = NullValueHandling.Ignore;
@@ -46,8 +45,16 @@ namespace PhonieCore.Mopidy
             Console.WriteLine(json);
             var httpContent = new StringContent(json, null, "application/json");
             httpContent.Headers.ContentType.CharSet = "";
-            var result = client.PostAsync(MopidyUrl, httpContent).Result;
-            Console.WriteLine(result.StatusCode + ", " + result.ReasonPhrase, ", ", result.Content);
+
+            try
+            {
+                var result = await client.PostAsync(MopidyUrl, httpContent);
+                Console.WriteLine(result.StatusCode + ", " + result.ReasonPhrase, ", ", result.Content);
+            }
+            catch(HttpRequestException e)
+            {
+                Console.WriteLine(e.Message);
+            }            
         }
 
         public void Stop()
@@ -65,6 +72,21 @@ namespace PhonieCore.Mopidy
             Call("playback.play");
         }
 
+        public void Next()
+        {
+            Call("playback.next");
+        }
+
+        public void Previous()
+        {
+            Call("playback.previous");
+        }
+
+        public void Seek(int sec)
+        {
+            Call("playback.seek", new Dictionary<string, object> { { "time_position", sec * 1000 } });
+        }
+
         public void SetVolume(int volume)
         {
             Call("mixer.set_volume", new Dictionary<string, object> { { "volume",  volume } });
@@ -72,7 +94,7 @@ namespace PhonieCore.Mopidy
 
         public void AddTrack(string uri)
         {
-            Call("tracklist.add", new Dictionary<string, object[]> { { "uris", new string[] { uri } } });
+            Call("tracklist.add", new Dictionary<string, object[]> { { "uris", new object[] { uri } } });
         }
 
         public void ClearTracks()

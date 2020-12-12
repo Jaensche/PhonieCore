@@ -15,6 +15,7 @@ namespace PhonieCore
 
         private string SetCurrentDirectoryStar(string id)
         {
+            Console.WriteLine("SetCurrentDirectoryStar");
             foreach (string directory in Directory.EnumerateDirectories(MediaDirectory))
             {
                 if (directory.EndsWith(Marker))
@@ -24,15 +25,19 @@ namespace PhonieCore
             }
 
             string newDirectoryName = MediaDirectory + id + Marker;
+            Console.WriteLine("New directory name: " + newDirectoryName);
             if (Directory.Exists(MediaDirectory + id))
             {
+                Console.WriteLine("Move");
                 Directory.Move(MediaDirectory + id, newDirectoryName);
             }
             else
-            { 
+            {
+                Console.WriteLine("Create");
                 var dir = Directory.CreateDirectory(newDirectoryName);
+                Console.WriteLine("Created");
                 Bash.Exec("sudo chmod 777 " + dir.FullName);
-                Console.WriteLine("sudo chmod 777 " + dir.FullName);
+                Console.WriteLine("Chmodded");
             }
 
             return newDirectoryName;
