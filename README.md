@@ -58,6 +58,7 @@ sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/buste
 sudo apt-get install python-spotify
 sudo apt-get install libspotify-dev
 sudo python3 -m pip install Mopidy-Spotify
+sudo systemctl enable mopidy
 ```
 mopidy.conf
 ```
