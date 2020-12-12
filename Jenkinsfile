@@ -14,5 +14,11 @@ pipeline {
       }
     }
 
+    stage('Artifacts') {
+      steps {
+        archiveArtifacts 'PhonieCore/bin/Debug/netcoreapp3.1/*'
+      }
+    }
+
   }
 }

@@ -14,6 +14,7 @@ Inspired by the [Phoniebox project](http://phoniebox.de)
 - rc522 RFID reader connected via SPI
 - Powerbank with pass through changing (to enable use and charge at the same time)
 - Nice box that fits all components
+- Audio hat (WM8960)
 
 ## Installation
 ### Update Raspbian
@@ -48,13 +49,38 @@ sudo apt-get install avahi-daemon
 sudo nano /etc/hostname
 ```
 
-### mpg123
+### Mopidy
 ```
-sudo apt-get install mpg123
+sudo apt-get install mopidy
+sudo apt-get install python3-pip
+wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
+sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/buster.list
+sudo apt-get install python-spotify
+sudo apt-get install libspotify-dev
+sudo python3 -m pip install Mopidy-Spotify
+```
+mopidy.conf
+```
+[spotify]
+client_id = ...
+client_secret = ...
+```
+
+### Audio HAT Driver
+```
+git clone https://github.com/waveshare/WM8960-Audio-HAT
+./install.sh sudo reboot
 ```
 
 ### .Net Core
-https://dotnet.microsoft.com/download/dotnet-core
+```
+wget https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-5.0.0-linux-arm32-binaries
+sudo mkdir -p /usr/share/dotnet
+sudo tar -zxf dotnet-sdk-latest-linux-arm.tar.gz -C /usr/share/dotnet
+sudo ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+export DOTNET_ROOT=$HOME/dotnet-arm32
+export PATH=$PATH:$HOME/dotnet-arm32
+```
 
 ### PhonieCore
 ```
@@ -65,7 +91,5 @@ Copy the binaries to the core share
 https://devblogs.microsoft.com/dotnet/net-core-and-systemd/
 
 ## ToDo
-- [ ] Fix playing files with whitespace
-- [ ] Bring readme up to date
-- [ ] Add play / pause / stop by RFID support
+- [ ] Proper shutdown
 
