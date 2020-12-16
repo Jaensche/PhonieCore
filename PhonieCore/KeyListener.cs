@@ -1,6 +1,6 @@
 ﻿using Unosquare.RaspberryIO;
 using Unosquare.RaspberryIO.Abstractions;
-using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,42 +8,60 @@ namespace PhonieCore
 {
     public class KeyListener
     {
-        public delegate void KeyPressedHandler(char key);
+        public delegate void KeyPressedHandler(int key);
         public event KeyPressedHandler OnKeyPressed;
-        public delegate void KeyReleasedHandler(char key);
+        public delegate void KeyReleasedHandler(int key);
         public event KeyReleasedHandler OnKeyReleased;
 
-        IGpioPin gpio26;
-
+        Dictionary<BcmPin, bool> buttonState;
 
         public KeyListener()
         {
-            gpio26 = Pi.Gpio[BcmPin.Gpio26];
-            gpio26.InputPullMode = GpioPinResistorPullMode.PullUp;
-            gpio26.PinMode = GpioPinDriveMode.Input;
-
             Task.Run(WatchKeys);
         }   
 
         public void WatchKeys()
         {
-            bool greenButtonState = false;
+            buttonState = new Dictionary<BcmPin, bool>();
+            InitGpio(BcmPin.Gpio26);
+            buttonState.Add(BcmPin.Gpio26, false);
+            InitGpio(BcmPin.Gpio06);
+            buttonState.Add(BcmPin.Gpio06, false);
+            InitGpio(BcmPin.Gpio05);
+            buttonState.Add(BcmPin.Gpio05, false);
+            InitGpio(BcmPin.Gpio16);
+            buttonState.Add(BcmPin.Gpio16, false);
 
-            while(true)
+            while (true)
             {
-                Thread.Sleep(500);
-
-                if(!gpio26.Read() && !greenButtonState)
+                Thread.Sleep(100);
+                foreach (BcmPin pin in buttonState.Keys)
                 {
-                    greenButtonState = true;
-                    OnKeyPressed.Invoke('g');
-                }
-                else
-                {
-                    OnKeyReleased.Invoke('g');
-                    greenButtonState = false;
+                    CheckButton(pin, buttonState); 
                 }
             }
-        }      
+        }  
+        
+        private void CheckButton(BcmPin pin, Dictionary<BcmPin, bool> buttonState)
+        {
+            if (!Pi.Gpio[pin].Read() && !buttonState[pin])
+            {
+                buttonState[pin] = true;
+                OnKeyPressed.Invoke((int)pin);
+            }
+
+            if (Pi.Gpio[pin].Read() && buttonState[pin])
+            {
+                OnKeyReleased.Invoke((int)pin);
+                buttonState[pin] = false;
+            }
+        }
+
+        private void InitGpio(BcmPin pin)
+        {
+            var gpio = Pi.Gpio[pin];
+            gpio.InputPullMode = GpioPinResistorPullMode.PullUp;
+            gpio.PinMode = GpioPinDriveMode.Input;
+        }
     }
 }

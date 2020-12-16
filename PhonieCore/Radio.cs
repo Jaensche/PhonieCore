@@ -12,14 +12,18 @@ namespace PhonieCore
             Unosquare.RaspberryIO.Pi.Init<BootstrapWiringPi>();
 
             _player = new Player();
-            //var bla = new KeyListener(HandleKeyPressed);
-            Console.WriteLine("Player");
-            var rfid = new Rfid(HandleNewCardDetected, HandleCardDetected);
 
+            var keyListener = new KeyListener();
+            keyListener.OnKeyPressed += HandleKeyPressed;
+            keyListener.OnKeyReleased += HandleKeyReleased;
+
+            var rfid = new Rfid();
+            rfid.CardDetected += HandleCardDetected;
+            rfid.NewCardDetected += HandleNewCardDetected;
         }
 
         private void HandleCardDetected(string uid)
-        {            
+        {
         }
 
         private void HandleNewCardDetected(string uid)
@@ -28,25 +32,30 @@ namespace PhonieCore
             _player.ProcessFolder(uid);
         }
 
-        private void HandleKeyPressed(char key)
+        private void HandleKeyPressed(int key)
         {
-            Console.WriteLine(key);
+            Console.WriteLine("Pressed: " + key);
 
             switch (key)
             {
-                case 'a':
+                case 6:
                     _player.Pause();
                     break;
-                case 's':
-                    _player.Stop();
+                case 16:
+                    _player.Play();
                     break;
-                case 'q':
+                case 5:
                     _player.IncreaseVolume();
                     break;
-                case 'w':
+                case 26:
                     _player.DecreaseVolume();
                     break;
             }
+        }
+
+        private void HandleKeyReleased(int key)
+        {
+            Console.WriteLine("Released: " + key);
         }
     }
 }

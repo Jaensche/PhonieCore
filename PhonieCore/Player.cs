@@ -84,13 +84,19 @@ namespace PhonieCore
 
         public void IncreaseVolume()
         {
-            volume += 5;
+            if (volume <= 95)
+            {
+                volume += 5;
+            }
             _mopidyClient.SetVolume(volume);
         }
 
         public void DecreaseVolume()
         {
-            volume -= 5;
+            if (volume >= 5)
+            {
+                volume -= 5;
+            }
             _mopidyClient.SetVolume(volume);
         }
 

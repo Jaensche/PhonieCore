@@ -1,16 +1,24 @@
 ﻿using Unosquare.RaspberryIO.Peripherals;
 using System.Text;
 using System;
+using System.Threading.Tasks;
 
 namespace PhonieCore
 {
     public class Rfid
     {
         public delegate void NewCardDetectedHandler(string uid);
+        public event NewCardDetectedHandler NewCardDetected;
 
         public delegate void CardDetectedHandler(string uid);
+        public event CardDetectedHandler CardDetected;
 
-        public Rfid(NewCardDetectedHandler onNewCardDetected, CardDetectedHandler onCardDetected)
+        public Rfid()
+        {
+            Task.Run(WatchRfid);
+        }
+
+        public void WatchRfid()
         {
             RFIDControllerMfrc522 _reader;
             try
@@ -32,11 +40,11 @@ namespace PhonieCore
                             if(currentUid != lastUid)
                             {
                                 lastUid = currentUid;
-                                onNewCardDetected(currentUid);
+                                NewCardDetected.Invoke(currentUid);
                             }
                             else
                             {
-                                onCardDetected(currentUid);
+                                CardDetected.Invoke(currentUid);
                             }
                         
                             //try

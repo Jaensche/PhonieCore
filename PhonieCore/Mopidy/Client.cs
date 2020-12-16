@@ -10,12 +10,12 @@ namespace PhonieCore.Mopidy
     public class Client : IDisposable
     {
         private const string MopidyUrl = "http://localhost:6680/mopidy/rpc";
-        private HttpClient client;
+        private HttpClient httpClient;
         private bool disposedValue;
 
         public Client()
         {
-            client = new HttpClient();
+            httpClient = new HttpClient();
         }
 
         private void Call(string method, Dictionary<string, object[]> parameters)
@@ -48,8 +48,8 @@ namespace PhonieCore.Mopidy
 
             try
             {
-                var result = await client.PostAsync(MopidyUrl, httpContent);
-                Console.WriteLine(result.StatusCode + ", " + result.ReasonPhrase, ", ", result.Content);
+                var result = await httpClient.PostAsync(MopidyUrl, httpContent);
+                Console.WriteLine(result.StatusCode + ", ", result.Content);
             }
             catch(HttpRequestException e)
             {
@@ -108,7 +108,7 @@ namespace PhonieCore.Mopidy
             {
                 if (disposing)
                 {
-                    client.Dispose();
+                    httpClient.Dispose();
                 }
 
                 disposedValue = true;
